@@ -36,7 +36,7 @@ Services are initialized using flags, which act as service identifiers. These fl
 
 ### Core Components
 
-- **Redis**: A high-performance in-memory database system. In our setup, Redis plays a crucial role in caching and providing fast access to data, especially for frequently accessed datasets like recent trades.
+- **Redis**: A high-performance in-memory database system. In this infrastructure, Redis plays a crucial role in caching and providing fast access to data, especially for frequently accessed datasets like recent trades.
 
 - **Nats Cluster**: A [distributed messaging system](https://nats.io/) with three nodes. It's the backbone of our inter-service communication, ensuring that data is consistently distributed across all services.
 
@@ -92,9 +92,9 @@ The architecture is designed to scale horizontally. As the demand grows, additio
 
 ### Kubernetes HPA (Horizontal Pod Autoscaling)
 
-Kubernetes HPA allows our services to automatically scale the number of pods in a deployment or replica set based on observed metrics like CPU utilization or, in our case, custom metrics provided through Prometheus. 
+Kubernetes HPA allows, services to automatically scale the number of pods in a deployment or replica set based on observed metrics like CPU utilization or, in our case, custom metrics provided through Prometheus. 
 
-- **Integration with Prometheus**: I have integrated Prometheus to monitor our services and send metrics to Kubernetes. These metrics are then used by the HPA to make scaling decisions. For instance, if a particular service is experiencing a surge in traffic, Prometheus metrics will reflect this, and the HPA will automatically scale up the number of pods for that service.
+- **Integration with Prometheus**: I have integrated Prometheus to monitor the services and send metrics to Kubernetes. These metrics are then used by the HPA to make scaling decisions. For instance, if a particular service is experiencing a surge in traffic, Prometheus metrics will reflect this, and the HPA will automatically scale up the number of pods for that service.
 
 - **Individual Service Scaling**: Each service in architecture can be scaled individually based on its own set of metrics. This ensures that resources are used efficiently and that each service is scaled appropriately based on its own demand.
 
@@ -108,4 +108,4 @@ Kubernetes HPA allows our services to automatically scale the number of pods in 
 
 The service infrastructure and pipeline stand as a testament to robust engineering and meticulous design. By leveraging cutting-edge technologies and best practices, I've built a system that's not only reliable but also scalable, ready to meet the demands of the ever-evolving world of cryptocurrency trading.
 
->> @denizumutdereli
+> @denizumutdereli
