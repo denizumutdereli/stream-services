@@ -1,0 +1,45 @@
+{
+  "APP_NAME": "Stream Service",
+  "AUTHOR":"@denizumutdereli",
+  "NOTE":"Dont forget to move critical credentials to .env files",
+  "GO_SERVICE_PORT": "3001",
+  "ETCD_URL": "localhost:2379",
+  "SYSLOG": "false",
+  "HTTPS": "false",
+  "TEST": "true",
+  "ALLOWED_SERVICES": ["tickers", "trades", "markets", "orderbook"],
+  "KAFKA_BROKERS": ["127.0.0.1:9092"],
+  "KAFKA_CONSUMER_GROUP": "stream-service-clients",
+  "KAFKA_CONSUME_TOPICS": ["orderbook"],
+  "KAFKA_PRODUCE_TOPIC": "orderbook",
+  "REDIS_PORT": 6379,
+  "REDIS_SECRET_KEY": "@1a3d@_412",
+  "REDIS_URL": "redis://localhost:6379/0",
+  "WSSERVER_URL": "ws://localhost:3001",
+  "WSPING_PERIOD": 10000,
+  "WSPING_MAX_ERROR": 5,
+  "NATS_URL": [
+    "nats://127.0.1.1:4222",
+    "nats://127.0.1.1:4223",
+    "nats://127.0.1.1:4224"
+  ],
+  "ASSETS_API": "http://localhost:3001/assets",
+  "SETTINGS_API": "http://127.0.0.1:3002/settings",
+  "DEFAULT_TICKER_INTERVAL":10,
+  "MAX_APP_ERRORS":20,
+  "MAX_RETRY": 5,
+  "MAX_WAIT": 5,
+  "MAX_SPREAD_PCT": 35,
+  "IGNORED_ASSETS": ["CRTTRY"],
+  "EXCHANGES": {
+    "Binance": {
+      "WS_STREAM_URL": "wss://stream.binance.com:9443/stream",
+      "REST_URL": "https://api.binance.com/api/v3/",
+      "DEFAULT_STREAM_INTERVAL":"100ms",
+      "RATE_LIMIT":6000,
+      "SNAPSHOT_DEPTH":5000,
+      "SNAPSHOT_CHUNK_SIZE": 20,
+      "SNAPSHOT_WAIT_TIME": 5
+     }
+   }
+}

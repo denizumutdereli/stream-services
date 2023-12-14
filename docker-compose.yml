@@ -1,0 +1,80 @@
+version: '3'
+services:
+
+  nats1:
+    image: nats:latest
+    ports:
+      - '4222:4222'
+      - '6222:6222'
+    command: -js -p 4222 -server_name nats1 -cluster nats://0.0.0.0:6222 -routes nats://ruser:T0pS3cr3t@nats2:6222,nats://ruser:T0pS3cr3t@nats3:6222 --cluster_name stream_cluster
+
+  nats2:
+    image: nats:latest
+    ports:
+      - '4223:4222'
+      - '6223:6222'
+    command: -js -p 4222 -server_name nats2 -cluster nats://0.0.0.0:6222 -routes nats://ruser:T0pS3cr3t@nats1:6222,nats://ruser:T0pS3cr3t@nats3:6222 --cluster_name stream_cluster
+
+  nats3:
+    image: nats:latest
+    ports:
+      - '4224:4222'
+      - '6224:6222'
+    command: -js -p 4222 -server_name nats3 -cluster nats://0.0.0.0:6222 -routes nats://ruser:T0pS3cr3t@nats1:6222,nats://ruser:T0pS3cr3t@nats2:6222 --cluster_name stream_cluster
+
+  nats4:
+    image: nats:latest
+    ports:
+      - '4225:4222'
+      - '6225:6222'
+    command: -js -p 4222 -server_name nats4 -cluster nats://0.0.0.0:6222 -routes nats://ruser:T0pS3cr3t@nats5:6222,nats://ruser:T0pS3cr3t@nats6:6222 --cluster_name second_cluster
+
+  nats5:
+    image: nats:latest
+    ports:
+      - '4226:4222'
+      - '6226:6222'
+    command: -js -p 4222 -server_name nats5 -cluster nats://0.0.0.0:6222 -routes nats://ruser:T0pS3cr3t@nats4:6222,nats://ruser:T0pS3cr3t@nats6:6222 --cluster_name second_cluster
+
+  nats6:
+    image: nats:latest
+    ports:
+      - '4227:4222'
+      - '6227:6222'
+    command: -js -p 4222 -server_name nats6 -cluster nats://0.0.0.0:6222 -routes nats://ruser:T0pS3cr3t@nats4:6222,nats://ruser:T0pS3cr3t@nats5:6222 --cluster_name second_cluster
+
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+
+  etcd:
+    image: quay.io/coreos/etcd:v3.4.13
+    ports:
+      - '2379:2379'
+      - '2380:2380'
+    environment:
+      - ETCD_NAME=etcd
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://etcd:2380
+      - ETCD_INITIAL_CLUSTER=etcd=http://etcd:2380
+      - ETCD_LOGGER=zap
+
+  etcd-browser:
+    image: buddho/etcd-browser
+    environment:
+      - ETCD_HOST=etcd
+      - ETCD_PORT=2379
+    ports:
+      - '8000:8000'
+  
+  postgres:
+    image: postgres:12.6
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=gouser
+      - POSTGRES_PASSWORD=gopass
+      - POSTGRES_DB=gostreamsdb
